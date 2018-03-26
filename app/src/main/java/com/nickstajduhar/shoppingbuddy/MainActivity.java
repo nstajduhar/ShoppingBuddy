@@ -1,36 +1,57 @@
 package com.nickstajduhar.shoppingbuddy;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.support.v4.app.FragmentManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+                                implements account.OnFragmentInteractionListener,
+                                            card.OnFragmentInteractionListener,
+                                            grocery.OnFragmentInteractionListener,
+                                            inventory.OnFragmentInteractionListener,
+                                            search.OnFragmentInteractionListener{
 
-    private TextView mTextMessage;
+    FragmentManager fm;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            FragmentTransaction transaction = fm.beginTransaction();
+
             switch (item.getItemId()) {
                 case R.id.navigation_search:
-                    mTextMessage.setText(R.string.title_search);
+                    transaction.replace(R.id.content_main, new search());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                     return true;
                 case R.id.navigation_browse:
-                    mTextMessage.setText(R.string.title_browse);
+                    transaction.replace(R.id.content_main, new grocery());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                     return true;
                 case R.id.navigation_lists:
-                    mTextMessage.setText(R.string.title_list);
+                    transaction.replace(R.id.content_main, new inventory());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                     return true;
                 case R.id.navigation_card:
-                    mTextMessage.setText(R.string.title_card);
+                    transaction.replace(R.id.content_main, new card());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                     return true;
                 case R.id.navigation_account:
-                    mTextMessage.setText(R.string.title_account);
+                    transaction.replace(R.id.content_main, new account());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                     return true;
             }
             return false;
@@ -40,11 +61,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        fm = getSupportFragmentManager();
+
+
+
         setContentView(R.layout.activity_main);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+
+        if(savedInstanceState == null){
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.content_main, new search());
+            transaction.commit();
+        }
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
