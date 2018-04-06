@@ -14,7 +14,7 @@ public class Produce {
     private Double ppPound;
     private String itemImg;
 
-    public Produce(){
+    public Produce(int i, double aDouble, double cursorDouble, String string){
 
     }
 

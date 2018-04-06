@@ -180,7 +180,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         cursor.getString(0)),
                         cursor.getDouble(1),
                         cursor.getDouble(2),
-                        cursor.getString(3));
+                        cursor.getString(3)));
             } while (cursor.moveToNext());
         }
 
@@ -209,68 +209,98 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return deli;
     }
 
-    public ArrayList<Picture> getAllPictures(){
-        ArrayList<Picture> pictureList = new ArrayList<Picture>();
-        String query = "SELECT * FROM " + TABLE_PICTURES;
+    public ArrayList<Deli> getAllDeli(){
+        ArrayList<Deli> deliList = new ArrayList<Deli>();
+        String query = "SELECT * FROM " + TABLE_DELI;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
             do{
-                pictureList.add(new Picture(Integer.parseInt(cursor.getString(0)),
-                        cursor.getString(1)));
+                deliList.add(new Deli(Integer.parseInt(
+                        cursor.getString(0)),
+                        cursor.getDouble(1),
+                        cursor.getDouble(2),
+                        cursor.getString(3)));
             } while (cursor.moveToNext());
         }
         db.close();
-        return pictureList;
+        return deliList;
     }
 
-    public Trip getTrip(int id){
+    public Produce getProduce(int id){
         SQLiteDatabase db = this.getReadableDatabase();
-        Trip trip = null;
+        Produce produce = null;
         //table name, String Array of column names, query, String array of values that will
         // be inserted into the query
-        Cursor cursor = db.query(TABLE_TRIPS,
-                new String[]{COLUMN_ID, COLUMN_DATE, COLUMN_LOCATION},
+        Cursor cursor = db.query(TABLE_PRODUCE,
+                new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_PRICE, COLUMN_PPPound, COLUMN_ITEMIMG},
                 COLUMN_ID + "=?", new String[]{String.valueOf(id)},
                 null, null, null, null);
         if(cursor != null){
             cursor.moveToFirst();
-            trip = new Trip(Integer.parseInt(cursor.getString(0)),
-                    cursor.getString(1),
-                    Integer.parseInt(cursor.getString(2)));
+            produce = new Produce(Integer.parseInt(
+                    cursor.getString(0)),
+                    cursor.getDouble(1),
+                    cursor.getDouble(2),
+                    cursor.getString(3));
         }
         db.close();
-        return trip;
+        return produce;
     }
 
-    public ArrayList<Trip> getAllTrips(){
-        ArrayList<Trip> tripList = new ArrayList<Trip>();
-        String query = "SELECT * FROM " + TABLE_TRIPS;
+    public ArrayList<Produce> getAllProduce(){
+        ArrayList<Produce> produceList = new ArrayList<Produce>();
+        String query = "SELECT * FROM " + TABLE_PRODUCE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
             do{
-                tripList.add(new Trip(Integer.parseInt(cursor.getString(0)),
-                        cursor.getString(1),
-                        Integer.parseInt(cursor.getString(2))));
+                produceList.add(new Produce(Integer.parseInt(
+                        cursor.getString(0)),
+                        cursor.getDouble(1),
+                        cursor.getDouble(2),
+                        cursor.getString(3)));
             } while (cursor.moveToNext());
         }
         db.close();
-        return tripList;
+        return produceList;
     }
 
     /**
      * UPDATE OPERATIONS
      * skip for now
      */
-    public int updateLocation(Location location){
+    public int updateLocationBakery(Bakery bakery){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, location.getName());
-        values.put(COLUMN_DESCRIPTION, location.getDescription());
-        values.put(COLUMN_COORD, location.getLocation());
-        return db.update(TABLE_LOCATIONS, values, COLUMN_ID + "= ?",
-                new String[]{String.valueOf(location.getId())});
+        values.put(COLUMN_NAME, bakery.getName());
+        values.put(COLUMN_PRICE, bakery.getPrice());
+        values.put(COLUMN_PPPound, bakery.getPpPound());
+        values.put(COLUMN_ITEMIMG, bakery.getItemImg());
+        return db.update(TABLE_BAKERY, values, COLUMN_ID + "= ?",
+                new String[]{String.valueOf(bakery.getId())});
+    }
+
+    public int updateLocationDeli(Deli deli){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, deli.getName());
+        values.put(COLUMN_PRICE, deli.getPrice());
+        values.put(COLUMN_PPPound, deli.getPpPound());
+        values.put(COLUMN_ITEMIMG, deli.getItemImg());
+        return db.update(TABLE_BAKERY, values, COLUMN_ID + "= ?",
+                new String[]{String.valueOf(deli.getId())});
+    }
+
+    public int updateLocationProduce(Produce produce){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, produce.getName());
+        values.put(COLUMN_PRICE, produce.getPrice());
+        values.put(COLUMN_PPPound, produce.getPpPound());
+        values.put(COLUMN_ITEMIMG, produce.getItemImg());
+        return db.update(TABLE_BAKERY, values, COLUMN_ID + "= ?",
+                new String[]{String.valueOf(produce.getId())});
     }
 
 
@@ -280,22 +310,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * DELETE OPERATIONS
      */
 
-    public void deleteLocation(int location){
+    public void deleteBakery(int bakery){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_LOCATIONS, COLUMN_ID + " = ?",
-                new String[]{String.valueOf(location)});
+        db.delete(TABLE_BAKERY, COLUMN_ID + " = ?",
+                new String[]{String.valueOf(bakery)});
         db.close();
     }
-    public void deletePicture(int picture){
+    public void deleteDeli(int deli){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_PICTURES, COLUMN_ID + " = ?",
-                new String[]{String.valueOf(picture)});
+        db.delete(TABLE_DELI, COLUMN_ID + " = ?",
+                new String[]{String.valueOf(deli)});
         db.close();
     }
-    public void deleteTrip(int trip){
+    public void deleteProduce(int produce){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_TRIPS, COLUMN_ID + " = ?",
-                new String[]{String.valueOf(trip)});
+        db.delete(TABLE_PRODUCE, COLUMN_ID + " = ?",
+                new String[]{String.valueOf(produce)});
         db.close();
     }
 

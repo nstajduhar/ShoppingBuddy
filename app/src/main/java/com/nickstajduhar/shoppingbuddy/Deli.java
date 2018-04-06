@@ -14,7 +14,7 @@ public class Deli {
     private Double ppPound;
     private String itemImg;
 
-    public Deli(){
+    public Deli(int i, double aDouble, double cursorDouble, String string){
 
     }
 
