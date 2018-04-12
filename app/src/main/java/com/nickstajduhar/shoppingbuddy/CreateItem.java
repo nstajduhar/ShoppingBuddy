@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,7 @@ public class CreateItem extends Fragment {
 
     EditText name;
     EditText price;
-    EditText ppPound;
+    EditText isle;
     EditText itemImg;
 
     FragmentManager fm;
@@ -75,19 +76,22 @@ public class CreateItem extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_item, container, false);
         price = (EditText) view.findViewById(R.id.itemPrice);
+        isle = (EditText) view.findViewById(R.id.itemIsle);
         name = (EditText) view.findViewById(R.id.itemName);
-        ppPound = (EditText) view.findViewById(R.id.itemIsle);
         itemImg = (EditText) view.findViewById(R.id.itemImg);
+
         Button submit = (Button) view.findViewById(R.id.submitButton);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Build up the location
                 double newprice = Double.parseDouble(price.getText().toString());
-                int newppPound = Integer.parseInt(ppPound.getText().toString());
+                int isleNumber = Integer.parseInt(isle.getText().toString());
 
                 //Create the item object
-                Item item = new Item(name.getText().toString(),newppPound, newprice, itemImg.getText().toString());
+                Item item = new Item(name.getText().toString(), isleNumber, newprice, itemImg.getText().toString());
+                Log.d("NICK", isleNumber + " was returned");
+
                 //Grab an instance of the database
                 DatabaseHandler db = new DatabaseHandler(getContext());
                 //Add the location to the database

@@ -39,11 +39,12 @@ public class itemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
      * @param activity needed to create fragment transactions from this class
      */
     public itemAdapter(ArrayList<Item> list, MainActivity activity) {
-        this.list = list;
+       // this.list = list;
         this.activity = activity;
     }
 
     public itemAdapter(ArrayList<Item> allItems) {
+        this.list = allItems;
     }
 
     @Override
@@ -57,11 +58,11 @@ public class itemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     @Override
     public void onBindViewHolder(ItemViewHolder holder, final int position) {
         // holder.getPackageIcon().setImageResource(list.get(position).getImagesId()[0]);
-        Picasso.with(activity.getBaseContext()).load(list.get(position).getItemImg()).resize(50,25).centerCrop().into(holder.getItem_icon());
+        //Picasso.with(activity.getBaseContext()).load(list.get(position).getItemImg()).resize(50,25).centerCrop().into(holder.getItem_icon());
         DatabaseHandler db = new DatabaseHandler(null);
         holder.getItem_title().setText(list.get(position).getName());
-        holder.getItem_isle().setText(list.get(position).getIsle());
-        holder.getItem_price().setText(list.get(position).getPrice().toString());
+        holder.getItem_isle().setText(String.valueOf(list.get(position).getIsle()));
+        holder.getItem_price().setText("$" + list.get(position).getPrice().toString());
         //Image in inventory
         //holder.getItem_icon().setText(list.get(position).getSide());
 
@@ -73,18 +74,18 @@ public class itemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         *   on and populate the fragment with the correct information
         *
         * */
-        holder.getInventoryItem().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("NICK", list.get(position).getName() + " was pressed");
-                fm = activity.getSupportFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction();
-                transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
-                transaction.replace(R.id.content_main, ItemView.newInstance(list, position));
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
+//        holder.getInventoryItem().setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.d("NICK", list.get(position).getName() + " was pressed");
+//                fm = activity.getSupportFragmentManager();
+//                FragmentTransaction transaction = fm.beginTransaction();
+//                transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
+//                transaction.replace(R.id.content_main, ItemView.newInstance(list, position));
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+//            }
+//        });
     }
 
 

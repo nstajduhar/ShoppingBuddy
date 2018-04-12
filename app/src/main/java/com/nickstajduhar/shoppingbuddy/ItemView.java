@@ -89,7 +89,6 @@ public class ItemView extends Fragment {
             side = getArguments().getString(SIDE);
             price = getArguments().getString(PRICE);
             itemImg = getArguments().getString(IMAGES_ID);
-            Log.d("NICK", name + " was pressed and I received it in itemViewFragment");
 
         }
 

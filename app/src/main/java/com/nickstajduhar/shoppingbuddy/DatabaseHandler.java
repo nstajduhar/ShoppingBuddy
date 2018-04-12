@@ -63,9 +63,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
 
     public static final String CREATE_BAKERY_TABLE = "CREATE TABLE " +
-            TABLE_BAKERY + "(" + COLUMN_ID + " INTEGER PRIMARY KEY,"
-            + COLUMN_NAME + " TEXT," + COLUMN_PRICE + " FLOAT,"
-            + COLUMN_ISLE + " INT," + COLUMN_ITEMIMG + " TEXT)";
+            TABLE_BAKERY + "(" + COLUMN_NAME + " TEXT," + COLUMN_ISLE + " INT," + COLUMN_PRICE + " FLOAT," +  COLUMN_ITEMIMG + " TEXT)";
 
     public static final String CREATE_DELI_TABLE = "CREATE TABLE " +
             TABLE_DELI + "(" + COLUMN_ID + " INTEGER PRIMARY KEY,"
@@ -120,8 +118,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, item.getName());
-        values.put(COLUMN_PRICE, item.getPrice());
         values.put(COLUMN_ISLE, item.getIsle());
+        values.put(COLUMN_PRICE, item.getPrice());
         values.put(COLUMN_ITEMIMG, item.getItemImg());
         db.insert(TABLE_BAKERY, null, values);
         db.close();
@@ -183,9 +181,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             do{
                 itemList.add(new Item(
+                        //name
                         cursor.getString(0),
+                        //isle
                         cursor.getInt(1),
+                        //price
                         cursor.getDouble(2),
+                        //image
                         cursor.getString(3)));
             } while (cursor.moveToNext());
         }

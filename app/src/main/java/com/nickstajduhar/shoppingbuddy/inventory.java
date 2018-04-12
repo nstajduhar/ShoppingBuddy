@@ -96,6 +96,8 @@ public class inventory extends Fragment {
         return view;
     }
 
+    
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
