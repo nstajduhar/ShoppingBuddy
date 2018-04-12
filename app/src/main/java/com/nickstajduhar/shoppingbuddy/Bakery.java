@@ -14,16 +14,16 @@ public class Bakery {
     private Double ppPound;
     private String itemImg;
 
-    public Bakery(int i, double aDouble, double cursorDouble, String string){
+    public Bakery(String i, double aDouble, double cursorDouble, String string){
 
     }
 
-    public Bakery(String name, Double price, Double ppPound, String itemImg) {
-        this.name = name;
-        this.price = price;
-        this.ppPound = ppPound;
-        this.itemImg = itemImg;
-    }
+//    public Bakery(String name, Double price, Double ppPound, String itemImg) {
+//        this.name = name;
+//        this.price = price;
+//        this.ppPound = ppPound;
+//        this.itemImg = itemImg;
+//    }
 
     public Bakery(int id, String name, Double price, Double ppPound, String itemImg) {
         this.name = name;
@@ -32,6 +32,8 @@ public class Bakery {
         this.itemImg = itemImg;
         this.id = id;
     }
+
+
 
     public int getId() {
         return id;

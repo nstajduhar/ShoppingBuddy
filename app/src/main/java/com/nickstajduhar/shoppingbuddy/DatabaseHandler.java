@@ -44,6 +44,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_PRICE = "price";
     public static final String COLUMN_PPPound = "ppPound";
+    public static final String COLUMN_ISLE = "isle";
     public static final String COLUMN_ITEMIMG = "itemImg";
 
     /**
@@ -64,7 +65,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String CREATE_BAKERY_TABLE = "CREATE TABLE " +
             TABLE_BAKERY + "(" + COLUMN_ID + " INTEGER PRIMARY KEY,"
             + COLUMN_NAME + " TEXT," + COLUMN_PRICE + " FLOAT,"
-            + COLUMN_PPPound + " FLOAT," + COLUMN_ITEMIMG + " TEXT)";
+            + COLUMN_ISLE + " INT," + COLUMN_ITEMIMG + " TEXT)";
 
     public static final String CREATE_DELI_TABLE = "CREATE TABLE " +
             TABLE_DELI + "(" + COLUMN_ID + " INTEGER PRIMARY KEY,"
@@ -84,6 +85,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public DatabaseHandler(Context context){
         super(context, DATABASE_NAME, null , DATABASE_VERSION);
     }
+
+
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_BAKERY_TABLE);
@@ -111,13 +116,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * CREATE OPERATIONS
      */
 
-    public void addBakery(Bakery bakery){
+    public void addBakery(Item item){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, bakery.getName());
-        values.put(COLUMN_PRICE, bakery.getPrice());
-        values.put(COLUMN_PPPound, bakery.getPpPound());
-        values.put(COLUMN_ITEMIMG, bakery.getItemImg());
+        values.put(COLUMN_NAME, item.getName());
+        values.put(COLUMN_PRICE, item.getPrice());
+        values.put(COLUMN_ISLE, item.getIsle());
+        values.put(COLUMN_ITEMIMG, item.getItemImg());
         db.insert(TABLE_BAKERY, null, values);
         db.close();
     }
@@ -154,31 +159,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         //table name, String Array of column names, query, String array of values that will
         // be inserted into the query
         Cursor cursor = db.query(TABLE_BAKERY,
-                new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_PRICE, COLUMN_PPPound, COLUMN_ITEMIMG},
+                new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_PRICE, COLUMN_ISLE, COLUMN_ITEMIMG},
                 COLUMN_ID + "=?", new String[]{String.valueOf(id)},
                 null, null, null, null);
         if(cursor != null){
             cursor.moveToFirst();
             bakery = new Bakery(Integer.parseInt(
-                    cursor.getString(0)),
-                    cursor.getDouble(1),
+                    String.valueOf(cursor.getInt(0))),
+                    cursor.getString(1),
                     cursor.getDouble(2),
-                    cursor.getString(3));
+                    cursor.getDouble(3),
+                    cursor.getString(4));
         }
         db.close();
         return bakery;
     }
 
-    public ArrayList<Bakery> getAllBakery(){
-        ArrayList<Bakery> itemList = new ArrayList<Bakery>();
+    public ArrayList<Item> getAllBakery(){
+        ArrayList<Item> itemList = new ArrayList<Item>();
         String query = "SELECT * FROM " + TABLE_BAKERY;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
             do{
-                itemList.add(new Bakery(Integer.parseInt(
-                        cursor.getString(0)),
-                        cursor.getDouble(1),
+                itemList.add(new Item(
+                        cursor.getString(0),
+                        cursor.getInt(1),
                         cursor.getDouble(2),
                         cursor.getString(3)));
             } while (cursor.moveToNext());
@@ -275,7 +281,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, bakery.getName());
         values.put(COLUMN_PRICE, bakery.getPrice());
-        values.put(COLUMN_PPPound, bakery.getPpPound());
+        values.put(COLUMN_ISLE, bakery.getItemImg());
         values.put(COLUMN_ITEMIMG, bakery.getItemImg());
         return db.update(TABLE_BAKERY, values, COLUMN_ID + "= ?",
                 new String[]{String.valueOf(bakery.getId())});

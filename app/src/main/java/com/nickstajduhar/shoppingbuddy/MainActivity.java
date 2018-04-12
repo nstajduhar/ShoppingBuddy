@@ -15,7 +15,8 @@ public class MainActivity extends AppCompatActivity
                                             card.OnFragmentInteractionListener,
                                             grocery.OnFragmentInteractionListener,
                                             inventory.OnFragmentInteractionListener,
-                                            search.OnFragmentInteractionListener{
+                                            search.OnFragmentInteractionListener,
+                                            CreateItem.OnFragmentInteractionListener{
 
     FragmentManager fm;
 
@@ -34,7 +35,8 @@ public class MainActivity extends AppCompatActivity
                     transaction.commit();
                     return true;
                 case R.id.navigation_browse:
-                    transaction.replace(R.id.content_main, new grocery());
+                    //Testing DB change back to browse after testing
+                    transaction.replace(R.id.content_main, new CreateItem());
                     transaction.addToBackStack(null);
                     transaction.commit();
                     return true;
