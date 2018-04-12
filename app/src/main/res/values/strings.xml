@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ShoppingBuddy</string>
+    <string name="app_name">Shopping Buddy</string>
     <string name="title_search">Search</string>
     <string name="title_browse">Browse</string>
     <string name="title_list">Your List</string>
