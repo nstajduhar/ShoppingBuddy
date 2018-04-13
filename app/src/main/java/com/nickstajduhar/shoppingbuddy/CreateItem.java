@@ -1,41 +1,46 @@
 package com.nickstajduhar.shoppingbuddy;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.EditText;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link account.OnFragmentInteractionListener} interface
+ * {@link CreateItem.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link account#newInstance} factory method to
+ * Use the {@link CreateItem#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class account extends Fragment {
-
-    public ImageButton adminLogin;
-
+public class CreateItem extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+    EditText name;
+    EditText price;
+    EditText isle;
+    EditText itemImg;
+
+    FragmentManager fm;
+
+
     private OnFragmentInteractionListener mListener;
 
-    public account() {
+    public CreateItem() {
         // Required empty public constructor
     }
 
@@ -45,11 +50,11 @@ public class account extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment account.
+     * @return A new instance of fragment CreateLocationFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static account newInstance(String param1, String param2) {
-        account fragment = new account();
+    public static CreateItem newInstance(String param1, String param2) {
+        CreateItem fragment = new CreateItem();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -69,10 +74,37 @@ public class account extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_account, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_item, container, false);
+        price = (EditText) view.findViewById(R.id.itemPrice);
+        isle = (EditText) view.findViewById(R.id.itemIsle);
+        name = (EditText) view.findViewById(R.id.itemName);
+        itemImg = (EditText) view.findViewById(R.id.itemImg);
 
-        adminLogin = (ImageButton) view.findViewById(R.id.adminLogin);
+        Button submit = (Button) view.findViewById(R.id.submitButton);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Build up the location
+                double newprice = Double.parseDouble(price.getText().toString());
+                int isleNumber = Integer.parseInt(isle.getText().toString());
+
+                //Create the item object
+                Item item = new Item(name.getText().toString(), isleNumber, newprice, itemImg.getText().toString());
+                Log.d("NICK", isleNumber + " was returned");
+
+                //Grab an instance of the database
+                DatabaseHandler db = new DatabaseHandler(getContext());
+                //Add the location to the database
+                db.addBakery(item);
+                //Close the database
+                db.close();
+                //Grab the fragment manager and move us back a page/fragment
+                fm = getActivity().getSupportFragmentManager();
+                fm.popBackStack();
+            }
+        });
+
+
 
 
         return view;

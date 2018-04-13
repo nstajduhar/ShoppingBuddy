@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -15,7 +16,9 @@ public class MainActivity extends AppCompatActivity
                                             card.OnFragmentInteractionListener,
                                             grocery.OnFragmentInteractionListener,
                                             inventory.OnFragmentInteractionListener,
-                                            search.OnFragmentInteractionListener{
+                                            search.OnFragmentInteractionListener,
+                                            CreateItem.OnFragmentInteractionListener,
+                                            adminLoginFragment.OnFragmentInteractionListener{
 
     FragmentManager fm;
 
@@ -34,7 +37,8 @@ public class MainActivity extends AppCompatActivity
                     transaction.commit();
                     return true;
                 case R.id.navigation_browse:
-                    transaction.replace(R.id.content_main, new grocery());
+                    //Testing DB change back to browse after testing
+                    transaction.replace(R.id.content_main, new CreateItem());
                     transaction.addToBackStack(null);
                     transaction.commit();
                     return true;
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
+
         setContentView(R.layout.activity_main);
 
 
@@ -77,6 +82,11 @@ public class MainActivity extends AppCompatActivity
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
+
+    public interface FragmentChangeListener
+    {
+        public void replaceFragment(Fragment fragment);
     }
 
     @Override
