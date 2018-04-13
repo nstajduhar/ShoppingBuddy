@@ -7,14 +7,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +24,6 @@ public class account extends Fragment {
 
     public ImageButton adminLogin;
 
-    FragmentManager fm;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -77,22 +72,8 @@ public class account extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_account, container, false);
 
-        Button login = (Button) view.findViewById(R.id.submitLogin);
-
-        final EditText user = (EditText) view.findViewById(R.id.usernameEdit);
-        final EditText pass = (EditText) view.findViewById(R.id.passwordEdit);
 
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (user.getText().toString().equals("admin") && pass.getText().toString().equals("password")) {
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    fm.beginTransaction().replace(R.id.content_main, new adminPage()).commit();
-
-                }
-            }
-        });
 
         return view;
     }

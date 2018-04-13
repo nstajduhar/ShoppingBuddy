@@ -5,9 +5,10 @@
     tools:context="com.nickstajduhar.shoppingbuddy.search">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <SearchView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/title_search" />
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"/>
 
 </FrameLayout>
