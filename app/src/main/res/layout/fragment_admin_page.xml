@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="?android:attr/actionBarSize"
+    tools:context="com.nickstajduhar.shoppingbuddy.adminPage">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:id="@+id/createItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Create Items" />
+
+    <Button
+        android:id="@+id/updateItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Update Items" />
+
+    <Button
+        android:id="@+id/deleteItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Delete Items" />
+
+    <Button
+        android:id="@+id/dropTables"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Drop Tables" />
+
+    <Button
+        android:id="@+id/createTables"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Create Tables" />
+
+    <Button
+        android:id="@+id/insertItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PreMade Items" />
+</LinearLayout>

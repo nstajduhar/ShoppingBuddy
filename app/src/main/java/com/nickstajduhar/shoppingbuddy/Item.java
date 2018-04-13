@@ -1,5 +1,8 @@
 package com.nickstajduhar.shoppingbuddy;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by nickstajduhar on 2018-03-26.
  */
@@ -8,6 +11,7 @@ public class Item {
 
     //properties for the package
     private int isle;
+    private int id;
     //private String[] nut;
     private String side;
     private String name;
@@ -28,8 +32,29 @@ public class Item {
         this.itemImg = itemImg;
     }
 
+    public Item(int id, String name, int isle, double price, String itemImg){
+        this.id = id;
+        this.name = name;
+        this.isle = isle;
+        //this.nut = nut;
+        //this.side = side;
+        this.price = price;
+        //this.ppPound = ppPound;
+        this.itemImg = itemImg;
+    }
 
 
+    public Item(int isle) {
+        this.isle = isle;
+    }
+
+    public Item(String name) {
+        this.name = name;
+    }
+
+    public String toString(){
+        return name;
+    }
 
     public int getIsle() {
         return isle;
@@ -78,4 +103,41 @@ public class Item {
     public void setItemImg(String itemImg) {
         this.itemImg = itemImg;
     }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(){this.id = id;}
+
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeInt(this.isle);
+        dest.writeDouble(this.price);
+        dest.writeString(this.itemImg);
+
+    }
+
+    protected Item(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.isle = in.readInt();
+        this.price = in.readDouble();
+        this.itemImg = in.readString();
+    }
+
+    public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {
+        @Override
+        public Item createFromParcel(Parcel source) {
+            return new Item(source);
+        }
+
+        @Override
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
 }

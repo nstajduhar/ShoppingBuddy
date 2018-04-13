@@ -1,19 +1,37 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="?attr/actionBarSize"
     tools:context="com.nickstajduhar.shoppingbuddy.account">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <ImageButton
-        android:id="@+id/adminLogin"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/usernameEdit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_supervisor_account_black_24dp" />
-</RelativeLayout>
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textPersonName"
+        android:paddingBottom="10dp"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/passwordEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:paddingBottom="10dp"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/submitLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login" />
+
+</LinearLayout>

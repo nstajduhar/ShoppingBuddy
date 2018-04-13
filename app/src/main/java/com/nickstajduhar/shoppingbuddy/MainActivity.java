@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity
                                 implements account.OnFragmentInteractionListener,
@@ -18,9 +20,14 @@ public class MainActivity extends AppCompatActivity
                                             inventory.OnFragmentInteractionListener,
                                             search.OnFragmentInteractionListener,
                                             CreateItem.OnFragmentInteractionListener,
-                                            adminLoginFragment.OnFragmentInteractionListener{
+                                            adminPage.OnFragmentInteractionListener,
+                                            UpdateItem.OnFragmentInteractionListener{
 
     FragmentManager fm;
+
+
+
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -28,7 +35,9 @@ public class MainActivity extends AppCompatActivity
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-            FragmentTransaction transaction = fm.beginTransaction();
+             FragmentTransaction transaction = fm.beginTransaction();
+
+
 
             switch (item.getItemId()) {
                 case R.id.navigation_search:
@@ -70,7 +79,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
         setContentView(R.layout.activity_main);
 
 
@@ -84,10 +92,7 @@ public class MainActivity extends AppCompatActivity
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-    public interface FragmentChangeListener
-    {
-        public void replaceFragment(Fragment fragment);
-    }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {

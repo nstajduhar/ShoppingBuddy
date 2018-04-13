@@ -196,6 +196,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return itemList;
     }
 
+
+
+    public ArrayList<Item> getAllItemsName(){
+        ArrayList<Item> itemList = new ArrayList<Item>();
+        String query = "SELECT name FROM " + TABLE_BAKERY;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            do{
+                itemList.add(new Item(cursor.getString(0)));
+            } while (cursor.moveToNext());
+        }
+
+
+        db.close();
+        return itemList;
+    }
+
     public Deli getDeli(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         Deli deli = null;
@@ -277,16 +295,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * UPDATE OPERATIONS
      * skip for now
+     * @param bakery
      */
-    public int updateLocationBakery(Bakery bakery){
+    public int updateBakery(Item item){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, bakery.getName());
-        values.put(COLUMN_PRICE, bakery.getPrice());
-        values.put(COLUMN_ISLE, bakery.getItemImg());
-        values.put(COLUMN_ITEMIMG, bakery.getItemImg());
+        values.put(COLUMN_NAME, item.getName());
+        values.put(COLUMN_PRICE, item.getPrice());
+        values.put(COLUMN_ISLE, item.getItemImg());
+        values.put(COLUMN_ITEMIMG, item.getItemImg());
         return db.update(TABLE_BAKERY, values, COLUMN_ID + "= ?",
-                new String[]{String.valueOf(bakery.getId())});
+                new String[]{String.valueOf(item.getId())});
     }
 
     public int updateLocationDeli(Deli deli){
