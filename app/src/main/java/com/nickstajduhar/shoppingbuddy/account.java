@@ -1,13 +1,16 @@
 package com.nickstajduhar.shoppingbuddy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ImageButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,6 +21,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class account extends Fragment {
+
+    public ImageButton adminLogin;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -64,7 +70,12 @@ public class account extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false);
+        View view =  inflater.inflate(R.layout.fragment_account, container, false);
+
+
+
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

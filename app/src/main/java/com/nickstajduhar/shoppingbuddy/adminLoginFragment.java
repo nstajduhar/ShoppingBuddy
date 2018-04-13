@@ -4,27 +4,20 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.nickstajduhar.shoppingbuddy.ForRecycleView.itemAdapter;
-
-import java.util.ArrayList;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link inventory.OnFragmentInteractionListener} interface
+ * {@link adminLoginFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link inventory#newInstance} factory method to
+ * Use the {@link adminLoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class inventory extends Fragment {
+public class adminLoginFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,7 +29,7 @@ public class inventory extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public inventory() {
+    public adminLoginFragment() {
         // Required empty public constructor
     }
 
@@ -46,11 +39,11 @@ public class inventory extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment inventory.
+     * @return A new instance of fragment adminLoginFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static inventory newInstance(String param1, String param2) {
-        inventory fragment = new inventory();
+    public static adminLoginFragment newInstance(String param1, String param2) {
+        adminLoginFragment fragment = new adminLoginFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,32 +64,8 @@ public class inventory extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_inventory, container, false);
-        RecyclerView list = view.findViewById(R.id.itemList);
-
-        DatabaseHandler db = new DatabaseHandler(getContext());
-        ArrayList<Item> allItems = db.getAllBakery();
-        db.close();
-        itemAdapter adapter = new itemAdapter(allItems);
-        list.setAdapter(adapter);
-        //Create a custom
-        //LinearLayoutManager that supports predictiveItemAnimations
-        LinearLayoutManager layoutManager =
-                new LinearLayoutManager(getContext()){
-                    @Override
-                    public boolean supportsPredictiveItemAnimations() {
-                        return true;
-                    }
-                };
-        //Use that layout manager
-        list.setLayoutManager(layoutManager);
-        //Set the item animator which controls how the animations look.
-        list.setItemAnimator(new DefaultItemAnimator());
-
-        return view;
+        return inflater.inflate(R.layout.fragment_admin_login, container, false);
     }
-
-    
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

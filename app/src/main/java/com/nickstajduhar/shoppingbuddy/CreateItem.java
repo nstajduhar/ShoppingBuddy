@@ -4,39 +4,43 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.nickstajduhar.shoppingbuddy.ForRecycleView.itemAdapter;
-
-import java.util.ArrayList;
+import android.widget.Button;
+import android.widget.EditText;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link inventory.OnFragmentInteractionListener} interface
+ * {@link CreateItem.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link inventory#newInstance} factory method to
+ * Use the {@link CreateItem#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class inventory extends Fragment {
+public class CreateItem extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+    EditText name;
+    EditText price;
+    EditText isle;
+    EditText itemImg;
+
+    FragmentManager fm;
+
+
     private OnFragmentInteractionListener mListener;
 
-    public inventory() {
+    public CreateItem() {
         // Required empty public constructor
     }
 
@@ -46,11 +50,11 @@ public class inventory extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment inventory.
+     * @return A new instance of fragment CreateLocationFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static inventory newInstance(String param1, String param2) {
-        inventory fragment = new inventory();
+    public static CreateItem newInstance(String param1, String param2) {
+        CreateItem fragment = new CreateItem();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,33 +74,41 @@ public class inventory extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_inventory, container, false);
-        RecyclerView list = view.findViewById(R.id.itemList);
+        View view = inflater.inflate(R.layout.fragment_create_item, container, false);
+        price = (EditText) view.findViewById(R.id.itemPrice);
+        isle = (EditText) view.findViewById(R.id.itemIsle);
+        name = (EditText) view.findViewById(R.id.itemName);
+        itemImg = (EditText) view.findViewById(R.id.itemImg);
 
-        DatabaseHandler db = new DatabaseHandler(getContext());
-        ArrayList<Item> allItems = db.getAllBakery();
-        db.close();
-        itemAdapter adapter = new itemAdapter(allItems);
-        list.setAdapter(adapter);
-        //Create a custom
-        //LinearLayoutManager that supports predictiveItemAnimations
-        LinearLayoutManager layoutManager =
-                new LinearLayoutManager(getContext()){
-                    @Override
-                    public boolean supportsPredictiveItemAnimations() {
-                        return true;
-                    }
-                };
-        //Use that layout manager
-        list.setLayoutManager(layoutManager);
-        //Set the item animator which controls how the animations look.
-        list.setItemAnimator(new DefaultItemAnimator());
+        Button submit = (Button) view.findViewById(R.id.submitButton);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Build up the location
+                double newprice = Double.parseDouble(price.getText().toString());
+                int isleNumber = Integer.parseInt(isle.getText().toString());
+
+                //Create the item object
+                Item item = new Item(name.getText().toString(), isleNumber, newprice, itemImg.getText().toString());
+                Log.d("NICK", isleNumber + " was returned");
+
+                //Grab an instance of the database
+                DatabaseHandler db = new DatabaseHandler(getContext());
+                //Add the location to the database
+                db.addBakery(item);
+                //Close the database
+                db.close();
+                //Grab the fragment manager and move us back a page/fragment
+                fm = getActivity().getSupportFragmentManager();
+                fm.popBackStack();
+            }
+        });
+
+
+
 
         return view;
     }
-
-    
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
