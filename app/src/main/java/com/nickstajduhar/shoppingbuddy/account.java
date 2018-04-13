@@ -72,7 +72,7 @@ public class account extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_account, container, false);
 
-        adminLogin = (ImageButton) view.findViewById(R.id.adminLogin);
+
 
 
         return view;
