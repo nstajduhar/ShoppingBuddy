@@ -1,29 +1,23 @@
 package com.nickstajduhar.shoppingbuddy;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link account.OnFragmentInteractionListener} interface
+ * {@link adminLoginFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link account#newInstance} factory method to
+ * Use the {@link adminLoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class account extends Fragment {
-
-    public ImageButton adminLogin;
-
+public class adminLoginFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,7 +29,7 @@ public class account extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public account() {
+    public adminLoginFragment() {
         // Required empty public constructor
     }
 
@@ -45,11 +39,11 @@ public class account extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment account.
+     * @return A new instance of fragment adminLoginFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static account newInstance(String param1, String param2) {
-        account fragment = new account();
+    public static adminLoginFragment newInstance(String param1, String param2) {
+        adminLoginFragment fragment = new adminLoginFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,12 +64,7 @@ public class account extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_account, container, false);
-
-        adminLogin = (ImageButton) view.findViewById(R.id.adminLogin);
-
-
-        return view;
+        return inflater.inflate(R.layout.fragment_admin_login, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

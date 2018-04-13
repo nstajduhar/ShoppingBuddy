@@ -31,7 +31,7 @@ public class ItemViewHolder extends RecyclerView.ViewHolder{
         item_title = (TextView) itemView.findViewById(R.id.item_title);
         item_price = (TextView) itemView.findViewById(R.id.item_price);
         item_isle = (TextView) itemView.findViewById(R.id.item_isle);
-        item_side = (TextView) itemView.findViewById(R.id.item_side);
+        //item_side = (TextView) itemView.findViewById(R.id.item_side);
 
 
         inventoryItem = (RelativeLayout) itemView.findViewById(R.id.inventoryItem);

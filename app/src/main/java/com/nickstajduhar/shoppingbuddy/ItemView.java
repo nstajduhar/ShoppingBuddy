@@ -30,21 +30,23 @@ public class ItemView extends Fragment {
 
 
     //keys for the bundle
-    public static final String TITLE = "title";
+    public static final String NAME = "name";
     public static final String ISLE = "isle";
     //public static final String nut = "nut";
     public static final String SIDE = "SIDE";
     public static final String PRICE = "price";
+    public static final String PPPound = "ppPound";
     public static final String IMAGES_ID = "images";
 
 
 
-    private String title;
+    private String name;
     private String isle;
     //private String[] nut;
     private String side;
     private String price;
-    private int[] imagesId;
+    private String ppPound;
+    private String itemImg;
 
 
     public ItemView() {
@@ -65,12 +67,13 @@ public class ItemView extends Fragment {
     public static ItemView newInstance(ArrayList<Item> list, int position) {
         ItemView fragment = new ItemView();
         Bundle bundle = new Bundle();
-        bundle.putString(TITLE, list.get(position).getTitle());
-        bundle.putString(ISLE, list.get(position).getIsle());
+        bundle.putString(NAME, list.get(position).getName());
+        bundle.putInt(ISLE, list.get(position).getIsle());
         //bundle.putStringArray(nut, list.get(position).getnut());
         bundle.putString(SIDE, list.get(position).getSide());
-        bundle.putString(PRICE, list.get(position).getPrice());
-        bundle.putIntArray(IMAGES_ID, list.get(position).getImagesId());
+        bundle.putDouble(PRICE, list.get(position).getPrice());
+        bundle.putDouble(PPPound, list.get(position).getPpPound());
+        bundle.putString(IMAGES_ID, list.get(position).getItemImg());
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -80,13 +83,12 @@ public class ItemView extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             //populating properties from the bundle received
-            title = getArguments().getString(TITLE);
+            name = getArguments().getString(NAME);
             isle = getArguments().getString(ISLE);
             //nut = getArguments().getStringArray(NUT);
             side = getArguments().getString(SIDE);
             price = getArguments().getString(PRICE);
-            imagesId = getArguments().getIntArray(IMAGES_ID);
-            Log.d("NICK", title + " was pressed and I received it in itemViewFragment");
+            itemImg = getArguments().getString(IMAGES_ID);
 
         }
 
@@ -98,7 +100,6 @@ public class ItemView extends Fragment {
                              Bundle savedInstanceState) {
         //inflating the view
         View view = inflater.inflate(R.layout.fragment_item_view, container, false);
-        getActivity().setTitle(title);
 
         return view;
     }
