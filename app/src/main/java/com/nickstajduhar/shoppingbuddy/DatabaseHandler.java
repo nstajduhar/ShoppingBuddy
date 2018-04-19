@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 
@@ -297,6 +298,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * skip for now
      * @param bakery
      */
+
+
+
     public int updateBakery(Item item){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -304,8 +308,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(COLUMN_PRICE, item.getPrice());
         values.put(COLUMN_ISLE, item.getItemImg());
         values.put(COLUMN_ITEMIMG, item.getItemImg());
-        return db.update(TABLE_BAKERY, values, COLUMN_ID + "= ?",
-                new String[]{String.valueOf(item.getId())});
+        return db.update(TABLE_BAKERY, values, COLUMN_NAME + "=" + item.getName(),
+                new String[]{String.valueOf(item.getName())});
     }
 
     public int updateLocationDeli(Deli deli){

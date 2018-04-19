@@ -1,6 +1,7 @@
 package com.nickstajduhar.shoppingbuddy;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -71,9 +72,11 @@ public class adminPage extends Fragment {
         Button createItems = (Button) view.findViewById(R.id.createItems);
         Button updateItems = (Button) view.findViewById(R.id.updateItems);
         Button deleteItems = (Button) view.findViewById(R.id.deleteItems);
-        Button dropTables = (Button) view.findViewById(R.id.dropTables);
-        Button createTables = (Button) view.findViewById(R.id.createTables);
         Button premadeItems = (Button) view.findViewById(R.id.insertItems);
+
+
+
+
 
         final FragmentManager fm = getActivity().getSupportFragmentManager();
 

@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by nickstajduhar on 2018-03-26.
  */
 
-public class Item {
+public class Item implements Parcelable{
 
     //properties for the package
     private int isle;
@@ -43,6 +43,10 @@ public class Item {
         this.itemImg = itemImg;
     }
 
+    public Item(){
+
+    }
+
 
     public Item(int isle) {
         this.isle = isle;
@@ -76,8 +80,9 @@ public class Item {
         return name;
     }
 
-    public void setName(String name) {
+    public String setName(String name) {
         this.name = name;
+        return name;
     }
 
     public Double getPrice() {
@@ -111,7 +116,12 @@ public class Item {
 
     public void setId(){this.id = id;}
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
         dest.writeString(this.name);
