@@ -108,7 +108,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public ArrayList<Item> getSearchItems(String searchResult){
         ArrayList<Item> itemSearchList = new ArrayList<Item>();
-        String query = "SELECT * FROM " + TABLE_ITEMS + " WHERE name LIKE '%"+searchResult+"%'" ;
+        String query = "SELECT * FROM " + TABLE_ITEMS + " WHERE (name LIKE '%"+searchResult+"%') OR isle LIKE '%"+searchResult+"%'" ;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
