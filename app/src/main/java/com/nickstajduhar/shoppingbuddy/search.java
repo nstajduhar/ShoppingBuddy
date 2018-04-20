@@ -4,9 +4,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.nickstajduhar.shoppingbuddy.ForRecycleView.itemAdapter;
+
+import java.util.ArrayList;
 
 
 /**
@@ -18,6 +26,10 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class search extends Fragment {
+
+    private SearchView searchView;
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -64,7 +76,62 @@ public class search extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        final View view = inflater.inflate(R.layout.fragment_search, container, false);
+
+         searchView = (SearchView) view.findViewById(R.id.searchArea);
+
+        final RecyclerView list = view.findViewById(R.id.itemList);
+
+        final DatabaseHandler db = new DatabaseHandler(getContext());
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                ArrayList<Item> allItems = db.getSearchItems(searchView.getQuery().toString());
+                db.close();
+                itemAdapter adapter = new itemAdapter(allItems);
+                list.setAdapter(adapter);
+                //Create a custom
+                //LinearLayoutManager that supports predictiveItemAnimations
+                LinearLayoutManager layoutManager =
+                        new LinearLayoutManager(getContext()){
+                            @Override
+                            public boolean supportsPredictiveItemAnimations() {
+                                return true;
+                            }
+                        };
+                //Use that layout manager
+                list.setLayoutManager(layoutManager);
+                //Set the item animator which controls how the animations look.
+                list.setItemAnimator(new DefaultItemAnimator());
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                ArrayList<Item> allItems = db.getSearchItems(searchView.getQuery().toString());
+                db.close();
+                itemAdapter adapter = new itemAdapter(allItems);
+                list.setAdapter(adapter);
+                //Create a custom
+                //LinearLayoutManager that supports predictiveItemAnimations
+                LinearLayoutManager layoutManager =
+                        new LinearLayoutManager(getContext()){
+                            @Override
+                            public boolean supportsPredictiveItemAnimations() {
+                                return true;
+                            }
+                        };
+                //Use that layout manager
+                list.setLayoutManager(layoutManager);
+                //Set the item animator which controls how the animations look.
+                list.setItemAnimator(new DefaultItemAnimator());
+                return false;
+            }
+        });
+
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

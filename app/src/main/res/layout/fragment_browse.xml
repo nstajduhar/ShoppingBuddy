@@ -3,22 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.nickstajduhar.shoppingbuddy.search">
+    tools:context="com.nickstajduhar.shoppingbuddy.BrowseFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <SearchView
-        android:id="@+id/searchArea"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_column="1"
-        android:background="@color/colorAccent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/itemList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_column="1"
         android:paddingBottom="?attr/actionBarSize" />
 
 </LinearLayout>

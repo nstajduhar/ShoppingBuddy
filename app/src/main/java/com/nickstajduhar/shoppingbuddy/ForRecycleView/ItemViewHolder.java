@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.nickstajduhar.shoppingbuddy.R;
 
+import java.net.URI;
+
 
 /**
  * Created by nickstajduhar on 2018-03-26.
@@ -43,7 +45,6 @@ public class ItemViewHolder extends RecyclerView.ViewHolder{
         return item_icon;
     }
 
-    
 
     public TextView getItem_title() {
         return item_title;
@@ -71,6 +72,7 @@ public class ItemViewHolder extends RecyclerView.ViewHolder{
     public RelativeLayout getInventoryItem() {
         return inventoryItem;
     }
+
 
 
 }

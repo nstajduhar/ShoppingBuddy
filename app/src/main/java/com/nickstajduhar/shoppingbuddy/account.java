@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 /**
@@ -72,6 +74,21 @@ public class account extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_account, container, false);
 
+        Button login = (Button) view.findViewById(R.id.submitButton);
+
+        final EditText user = (EditText) view.findViewById(R.id.userBox);
+        final EditText pass = (EditText) view.findViewById(R.id.passwordBox);
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (user.getText().toString().equals("admin") && pass.getText().toString().equals("password")) {
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    fm.beginTransaction().replace(R.id.content_main, new adminPage()).commit();
+
+                }
+            }
+        });
 
 
 
