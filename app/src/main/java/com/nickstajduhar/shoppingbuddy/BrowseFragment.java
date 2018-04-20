@@ -4,9 +4,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.nickstajduhar.shoppingbuddy.ForRecycleView.itemAdapter;
+
+import java.util.ArrayList;
 
 
 /**
@@ -64,7 +71,30 @@ public class BrowseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_browse, container, false);
+        View view = inflater.inflate(R.layout.fragment_browse, container, false);
+
+        RecyclerView list = view.findViewById(R.id.itemList);
+
+        DatabaseHandler db = new DatabaseHandler(getContext());
+        ArrayList<Item> allItems = db.getAllBakery();
+        db.close();
+        itemAdapter adapter = new itemAdapter(allItems);
+        list.setAdapter(adapter);
+        //Create a custom
+        //LinearLayoutManager that supports predictiveItemAnimations
+        LinearLayoutManager layoutManager =
+                new LinearLayoutManager(getContext()){
+                    @Override
+                    public boolean supportsPredictiveItemAnimations() {
+                        return true;
+                    }
+                };
+        //Use that layout manager
+        list.setLayoutManager(layoutManager);
+        //Set the item animator which controls how the animations look.
+        list.setItemAnimator(new DefaultItemAnimator());
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

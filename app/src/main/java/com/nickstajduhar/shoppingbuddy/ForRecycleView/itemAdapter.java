@@ -1,5 +1,10 @@
 package com.nickstajduhar.shoppingbuddy.ForRecycleView;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +22,9 @@ import com.nickstajduhar.shoppingbuddy.MainActivity;
 import com.nickstajduhar.shoppingbuddy.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +34,7 @@ import java.util.ArrayList;
 public class itemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
 
+    private Context context = null;
     //array of packages going to te recyclerView
     private ArrayList<Item> list = null;
 
@@ -52,8 +61,12 @@ public class itemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         // create a new view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_inventory, parent, false);
         ItemViewHolder holder = new ItemViewHolder(view);
+
+
         return holder;
     }
+
+
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, final int position) {
@@ -64,7 +77,12 @@ public class itemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         holder.getItem_isle().setText(String.valueOf(list.get(position).getIsle()));
         holder.getItem_price().setText("$" + list.get(position).getPrice().toString());
         //Image in inventory
-        //holder.getItem_icon().setText(list.get(position).getSide());
+        //holder.getItem_icon().
+        //Picasso.get().load("http://i.imgur.com/DvpvklR.png").into(holder.getItem_icon());
+        Context context = holder.getItem_icon().getContext();
+        Picasso.with(context).load(list.get(position).getItemImg()).into(holder.getItem_icon());
+        Log.d("Image", holder.getItem_icon().toString() + "");
+
 
          /*
         * I made a setOnClickListener for the relativeLayout to simulate when an item is pressed. I made it this way
@@ -89,8 +107,12 @@ public class itemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     }
 
 
+
+
     @Override
     public int getItemCount() {
         return list.size();
     }
+
+
 }

@@ -124,7 +124,7 @@ public class UpdateItem extends Fragment {
                 //cv.put("COLUMN_ISLE", db.getAllBakery().get(spin.getSelectedItemPosition()).setIsle(Integer.parseInt(itemIsle.getText().toString());
                 //cv.put("COLUMN_PRICE",db.getAllBakery().get(spin.getSelectedItemPosition()).setPrice(Double.parseDouble(itemPrice.getText().toString())));
                 //cv.put("COLUMN_ITEMIMG",db.getAllBakery().get(spin.getSelectedItemPosition()).setItemImg(itemImg.getText().toString()));
-                db.updateBakery(cv);
+                //db.updateBakery();
                 fm = getActivity().getSupportFragmentManager();
                 fm.popBackStack();
             }

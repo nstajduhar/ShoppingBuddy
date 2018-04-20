@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity
                                             search.OnFragmentInteractionListener,
                                             CreateItem.OnFragmentInteractionListener,
                                             adminPage.OnFragmentInteractionListener,
-                                            UpdateItem.OnFragmentInteractionListener{
+                                            UpdateItem.OnFragmentInteractionListener,
+                                            BrowseFragment.OnFragmentInteractionListener{
 
     FragmentManager fm;
 
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity
                     return true;
                 case R.id.navigation_browse:
                     //Testing DB change back to browse after testing
-                    transaction.replace(R.id.content_main, new CreateItem());
+                    transaction.replace(R.id.content_main, new BrowseFragment());
                     transaction.addToBackStack(null);
                     transaction.commit();
                     return true;
