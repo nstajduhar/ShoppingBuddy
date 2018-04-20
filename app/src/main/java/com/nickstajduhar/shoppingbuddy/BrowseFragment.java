@@ -76,7 +76,7 @@ public class BrowseFragment extends Fragment {
         RecyclerView list = view.findViewById(R.id.itemList);
 
         DatabaseHandler db = new DatabaseHandler(getContext());
-        ArrayList<Item> allItems = db.getAllBakery();
+        ArrayList<Item> allItems = db.getAllItems();
         db.close();
         itemAdapter adapter = new itemAdapter(allItems);
         list.setAdapter(adapter);

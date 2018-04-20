@@ -81,7 +81,6 @@ public class itemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         //Picasso.get().load("http://i.imgur.com/DvpvklR.png").into(holder.getItem_icon());
         Context context = holder.getItem_icon().getContext();
         Picasso.with(context).load(list.get(position).getItemImg()).into(holder.getItem_icon());
-        Log.d("Image", holder.getItem_icon().toString() + "");
 
 
          /*

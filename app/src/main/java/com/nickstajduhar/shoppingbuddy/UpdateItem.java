@@ -105,12 +105,12 @@ public class UpdateItem extends Fragment {
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String isle = String.valueOf(db.getAllBakery().get(spin.getSelectedItemPosition()).getIsle());
-                String price = String.valueOf(db.getAllBakery().get(spin.getSelectedItemPosition()).getPrice());
-                itemName.setText(db.getAllBakery().get(spin.getSelectedItemPosition()).getName());
+                String isle = String.valueOf(db.getAllItems().get(spin.getSelectedItemPosition()).getIsle());
+                String price = String.valueOf(db.getAllItems().get(spin.getSelectedItemPosition()).getPrice());
+                itemName.setText(db.getAllItems().get(spin.getSelectedItemPosition()).getName());
                 itemIsle.setText(isle);
                 itemPrice.setText(price);
-                itemImg.setText(db.getAllBakery().get(spin.getSelectedItemPosition()).getItemImg());
+                itemImg.setText(db.getAllItems().get(spin.getSelectedItemPosition()).getItemImg());
                 }
 
         });
@@ -120,10 +120,10 @@ public class UpdateItem extends Fragment {
             @Override
             public void onClick(View v) {
                 ContentValues cv = new ContentValues();
-                cv.put("COLUMN_NAME",db.getAllBakery().get(spin.getSelectedItemPosition()).setName(itemName.getText().toString()));
-                //cv.put("COLUMN_ISLE", db.getAllBakery().get(spin.getSelectedItemPosition()).setIsle(Integer.parseInt(itemIsle.getText().toString());
-                //cv.put("COLUMN_PRICE",db.getAllBakery().get(spin.getSelectedItemPosition()).setPrice(Double.parseDouble(itemPrice.getText().toString())));
-                //cv.put("COLUMN_ITEMIMG",db.getAllBakery().get(spin.getSelectedItemPosition()).setItemImg(itemImg.getText().toString()));
+                cv.put("COLUMN_NAME",db.getAllItems().get(spin.getSelectedItemPosition()).setName(itemName.getText().toString()));
+                //cv.put("COLUMN_ISLE", db.getAllItems().get(spin.getSelectedItemPosition()).setIsle(Integer.parseInt(itemIsle.getText().toString());
+                //cv.put("COLUMN_PRICE",db.getAllItems().get(spin.getSelectedItemPosition()).setPrice(Double.parseDouble(itemPrice.getText().toString())));
+                //cv.put("COLUMN_ITEMIMG",db.getAllItems().get(spin.getSelectedItemPosition()).setItemImg(itemImg.getText().toString()));
                 //db.updateBakery();
                 fm = getActivity().getSupportFragmentManager();
                 fm.popBackStack();

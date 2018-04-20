@@ -95,7 +95,7 @@ public class CreateItem extends Fragment {
                 //Grab an instance of the database
                 DatabaseHandler db = new DatabaseHandler(getContext());
                 //Add the location to the database
-                db.addBakery(item);
+                db.addItem(item);
                 //Close the database
                 db.close();
                 //Grab the fragment manager and move us back a page/fragment
