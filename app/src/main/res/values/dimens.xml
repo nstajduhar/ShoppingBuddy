@@ -2,4 +2,20 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Dimensions for each item inside the recyclerView (packages)-->
+    <dimen name="icon_width">80dp</dimen>
+    <dimen name="icon_height">80dp</dimen>
+    <dimen name="icon_margin">8dp</dimen>
+    <dimen name="package_item_height">100dp</dimen>
+    <dimen name="recycler_title_size">24sp</dimen>
+
+
+    <!-- Some general dimensions-->
+    <dimen name="padding">8dp</dimen>
+    <dimen name="margin">8dp</dimen>
+    <dimen name="title_size">20sp</dimen>
+    <dimen name="subtitle_size">16sp</dimen>
+    <dimen name="button_text_size">15sp</dimen>
+    <dimen name="display_size">45sp</dimen>
 </resources>
