@@ -29,6 +29,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * Create the names of all the tables
      */
     public static final String TABLE_ITEMS = "items";
+    public static final String TABLE_FAV_ITEMS = "favorites";
+
 
     //public static final String TABLE_ITEMIMAGE = "image_item";
 
@@ -56,6 +58,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String CREATE_ITEMS_TABLE = "CREATE TABLE " +
             TABLE_ITEMS + "(" + COLUMN_NAME + " TEXT," + COLUMN_ISLE + " INT," + COLUMN_PRICE + " FLOAT," +  COLUMN_ITEMIMG + " TEXT)";
 
+    public static final String CREATE_FAV_ITEMS_TABLE = "CREATE TABLE " +
+            TABLE_FAV_ITEMS + "(" + COLUMN_NAME + " TEXT," + COLUMN_ISLE + " INT," + COLUMN_PRICE + " FLOAT," +  COLUMN_ITEMIMG + " TEXT)";
+
 
 
     public DatabaseHandler(Context context){
@@ -68,12 +73,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_ITEMS_TABLE);
+        db.execSQL(CREATE_FAV_ITEMS_TABLE);
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAV_ITEMS);
 
     }
 
@@ -97,6 +104,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(COLUMN_PRICE, item.getPrice());
         values.put(COLUMN_ITEMIMG, item.getItemImg());
         db.insert(TABLE_ITEMS, null, values);
+        db.close();
+    }
+
+    public void addFavItem(Item item){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, item.getName());
+        values.put(COLUMN_ISLE, item.getIsle());
+        values.put(COLUMN_PRICE, item.getPrice());
+        values.put(COLUMN_ITEMIMG, item.getItemImg());
+        db.insert(TABLE_FAV_ITEMS, null, values);
         db.close();
     }
 
@@ -152,11 +170,50 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return itemList;
     }
 
+    public ArrayList<Item> getAllFavItems(){
+        ArrayList<Item> itemList = new ArrayList<Item>();
+        String query = "SELECT * FROM " + TABLE_FAV_ITEMS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            do{
+                itemList.add(new Item(
+                        //name
+                        cursor.getString(0),
+                        //isle
+                        cursor.getInt(1),
+                        //price
+                        cursor.getDouble(2),
+                        //image
+                        cursor.getString(3)));
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+        return itemList;
+    }
+
 
 
     public ArrayList<Item> getAllItemsName(){
         ArrayList<Item> itemList = new ArrayList<Item>();
         String query = "SELECT name FROM " + TABLE_ITEMS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            do{
+                itemList.add(new Item(cursor.getString(0)));
+            } while (cursor.moveToNext());
+        }
+
+
+        db.close();
+        return itemList;
+    }
+
+    public ArrayList<Item> getAllIFavtemsName(){
+        ArrayList<Item> itemList = new ArrayList<Item>();
+        String query = "SELECT name FROM " + TABLE_FAV_ITEMS;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
@@ -194,6 +251,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
 
     public void deleteItems(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_ITEMS, COLUMN_NAME + " = ?",
+                new String[]{String.valueOf(name)});
+        db.close();
+    }
+
+    public void deleteFavItems(String name){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_ITEMS, COLUMN_NAME + " = ?",
                 new String[]{String.valueOf(name)});

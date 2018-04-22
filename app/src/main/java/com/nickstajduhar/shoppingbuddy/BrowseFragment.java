@@ -73,6 +73,8 @@ public class BrowseFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_browse, container, false);
 
+
+
         RecyclerView list = view.findViewById(R.id.itemList);
 
         DatabaseHandler db = new DatabaseHandler(getContext());

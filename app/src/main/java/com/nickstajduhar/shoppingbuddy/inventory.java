@@ -75,7 +75,7 @@ public class inventory extends Fragment {
         RecyclerView list = view.findViewById(R.id.itemList);
 
         DatabaseHandler db = new DatabaseHandler(getContext());
-        ArrayList<Item> allItems = db.getAllItems();
+        ArrayList<Item> allItems = db.getAllFavItems();
         db.close();
         itemAdapter adapter = new itemAdapter(allItems);
         list.setAdapter(adapter);
