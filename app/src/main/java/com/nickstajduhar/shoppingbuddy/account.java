@@ -97,11 +97,14 @@ public class account extends Fragment {
             }
         });
 
+        //This if statement checks if the isLoggedIn boolean is true and if it is then send them right to the logged in page. If false it will bring them to the log in page
+
         if (isLoggedIn == true){
             FragmentManager fm = getActivity().getSupportFragmentManager();
             fm.beginTransaction().replace(R.id.content_main, new adminPage()).commit();
 
         }
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

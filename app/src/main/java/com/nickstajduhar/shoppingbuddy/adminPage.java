@@ -113,6 +113,8 @@ public class adminPage extends Fragment {
             }
         });
 
+        //Making premade items button for the admin page
+
         premadeItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -22,7 +22,6 @@ import com.twitter.sdk.android.core.TwitterConfig;
 public class MainActivity extends AppCompatActivity
                                 implements account.OnFragmentInteractionListener,
                                             card.OnFragmentInteractionListener,
-                                            grocery.OnFragmentInteractionListener,
                                             inventory.OnFragmentInteractionListener,
                                             search.OnFragmentInteractionListener,
                                             CreateItem.OnFragmentInteractionListener,

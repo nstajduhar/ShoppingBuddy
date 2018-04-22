@@ -1,8 +1,10 @@
 package com.nickstajduhar.shoppingbuddy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,10 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.nickstajduhar.shoppingbuddy.ForRecycleView.itemAdapter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 /**
@@ -72,6 +76,52 @@ public class inventory extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_inventory, container, false);
+
+        final String url = "https://www.zehrs.ca";
+        Button calendar = (Button) view.findViewById(R.id.calendar);
+        Button web = (Button) view.findViewById(R.id.website);
+
+
+        calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String title = "Go Shopping with ShoppingBuddy!";
+                String location = "Zehrs";
+                long startMillis = 0;
+                long endMillis = 0;
+                Calendar beginTime = Calendar.getInstance();
+                beginTime.set(2018,9,14,7,30);
+                startMillis = beginTime.getTimeInMillis();
+                Calendar endTime = Calendar.getInstance();
+                endTime.set(2018,9,14,9,30);
+                endMillis = endTime.getTimeInMillis();
+
+
+                Intent intent = new Intent(Intent.ACTION_INSERT);
+                intent.setData(CalendarContract.Events.CONTENT_URI);
+                intent.putExtra(CalendarContract.Events.TITLE, title);
+                intent.putExtra(CalendarContract.Events.EVENT_LOCATION, location);
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis);
+                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endMillis);
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
+
+        web.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri webpage = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
+
+
+
         RecyclerView list = view.findViewById(R.id.itemList);
 
         DatabaseHandler db = new DatabaseHandler(getContext());

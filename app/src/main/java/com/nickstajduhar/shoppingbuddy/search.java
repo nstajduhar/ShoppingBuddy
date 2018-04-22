@@ -84,6 +84,8 @@ public class search extends Fragment {
 
         final DatabaseHandler db = new DatabaseHandler(getContext());
 
+        //These functions query the search bar for their text. If the text is updates it runs the second function
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {

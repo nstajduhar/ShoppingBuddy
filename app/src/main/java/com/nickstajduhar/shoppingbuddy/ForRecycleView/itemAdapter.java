@@ -1,30 +1,18 @@
 package com.nickstajduhar.shoppingbuddy.ForRecycleView;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nickstajduhar.shoppingbuddy.Bakery;
-import com.nickstajduhar.shoppingbuddy.CreateItem;
 import com.nickstajduhar.shoppingbuddy.DatabaseHandler;
 import com.nickstajduhar.shoppingbuddy.Item;
-import com.nickstajduhar.shoppingbuddy.ItemView;
 import com.nickstajduhar.shoppingbuddy.MainActivity;
 import com.nickstajduhar.shoppingbuddy.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
