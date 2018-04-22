@@ -39,7 +39,6 @@ public class ItemViewHolder extends RecyclerView.ViewHolder{
         item_title = (TextView) itemView.findViewById(R.id.item_title);
         item_price = (TextView) itemView.findViewById(R.id.item_price);
         item_isle = (TextView) itemView.findViewById(R.id.item_isle);
-        item_delete = (ImageView) itemView.findViewById(R.id.delete);
 
         item_fav = (ImageView) itemView.findViewById(R.id.favorite);
         //item_side = (TextView) itemView.findViewById(R.id.item_side);
@@ -49,9 +48,7 @@ public class ItemViewHolder extends RecyclerView.ViewHolder{
 
     }
 
-    public ImageView getItem_delete() {
-        return item_delete;
-    }
+
 
     public ImageView getItem_icon() {
         return item_icon;
