@@ -8,10 +8,16 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.ImageButton;
+
+import com.twitter.sdk.android.core.DefaultLogger;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterConfig;
 
 public class MainActivity extends AppCompatActivity
                                 implements account.OnFragmentInteractionListener,
@@ -22,7 +28,10 @@ public class MainActivity extends AppCompatActivity
                                             CreateItem.OnFragmentInteractionListener,
                                             adminPage.OnFragmentInteractionListener,
                                             UpdateItem.OnFragmentInteractionListener,
-                                            BrowseFragment.OnFragmentInteractionListener{
+                                            BrowseFragment.OnFragmentInteractionListener,
+                                            DeleteFragment.OnFragmentInteractionListener,
+                                            SettingsFragment.OnFragmentInteractionListener,
+                                            MoreFragment.OnFragmentInteractionListener{
 
     FragmentManager fm;
 
@@ -57,8 +66,8 @@ public class MainActivity extends AppCompatActivity
                     transaction.addToBackStack(null);
                     transaction.commit();
                     return true;
-                case R.id.navigation_card:
-                    transaction.replace(R.id.content_main, new card());
+                case R.id.navigation_more:
+                    transaction.replace(R.id.content_main, new MoreFragment());
                     transaction.addToBackStack(null);
                     transaction.commit();
                     return true;
@@ -67,6 +76,7 @@ public class MainActivity extends AppCompatActivity
                     transaction.addToBackStack(null);
                     transaction.commit();
                     return true;
+
             }
             return false;
         }
@@ -78,8 +88,12 @@ public class MainActivity extends AppCompatActivity
 
         fm = getSupportFragmentManager();
 
-
-
+        TwitterConfig config = new TwitterConfig.Builder(this)
+                .logger(new DefaultLogger(Log.DEBUG))
+                .twitterAuthConfig(new TwitterAuthConfig("yv6poEeigtLQln0u4ReTzMOsX", "mc7ur8qs0VSun6cLSrnASXHEJFhSVEMPR2G1Ppuxitq1aT43yK"))
+                .debug(true)
+                .build();
+        Twitter.initialize(config);
         setContentView(R.layout.activity_main);
 
 

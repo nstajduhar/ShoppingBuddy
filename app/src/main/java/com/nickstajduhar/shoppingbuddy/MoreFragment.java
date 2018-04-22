@@ -4,44 +4,50 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+
+import com.mikepenz.aboutlibraries.Libs;
+import com.mikepenz.aboutlibraries.LibsBuilder;
+import com.mikepenz.aboutlibraries.ui.LibsFragment;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.DefaultLogger;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterConfig;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.models.Tweet;
+import com.twitter.sdk.android.tweetui.CompactTweetView;
+import com.twitter.sdk.android.tweetui.TweetUtils;
+import com.twitter.sdk.android.tweetui.TweetView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link CreateItem.OnFragmentInteractionListener} interface
+ * {@link MoreFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link CreateItem#newInstance} factory method to
+ * Use the {@link MoreFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CreateItem extends Fragment {
+public class MoreFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    EditText name;
-    EditText price;
-    EditText isle;
-    EditText itemImg;
-
-    FragmentManager fm;
-
-
     private OnFragmentInteractionListener mListener;
 
-    public CreateItem() {
+    public MoreFragment() {
         // Required empty public constructor
     }
 
@@ -51,11 +57,11 @@ public class CreateItem extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CreateLocationFragment.
+     * @return A new instance of fragment MoreFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CreateItem newInstance(String param1, String param2) {
-        CreateItem fragment = new CreateItem();
+    public static MoreFragment newInstance(String param1, String param2) {
+        MoreFragment fragment = new MoreFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,48 +76,48 @@ public class CreateItem extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create_item, container, false);
-        price = (EditText) view.findViewById(R.id.itemPrice);
-        isle = (EditText) view.findViewById(R.id.itemIsle);
-        name = (EditText) view.findViewById(R.id.itemName);
-        itemImg = (EditText) view.findViewById(R.id.itemImg);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_more, container, false);
 
-        Button submit = (Button) view.findViewById(R.id.submitButton);
-        submit.setOnClickListener(new View.OnClickListener() {
+        Button credits = (Button) view.findViewById(R.id.credits);
+
+        credits.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //Build up the location
-                double newprice = Double.parseDouble(price.getText().toString());
-                int isleNumber = Integer.parseInt(isle.getText().toString());
-
-                //Create the item object
-                Item item = new Item(name.getText().toString(), isleNumber, newprice, itemImg.getText().toString());
-                Toast.makeText(getContext(), name.getText() + " has been added to the database",
-                        Toast.LENGTH_SHORT).show();
-                //Grab an instance of the database
-                DatabaseHandler db = new DatabaseHandler(getContext());
-                //Add the location to the database
-                db.addItem(item);
-                //Close the database
-                db.close();
-                price.setText("");
-                isle.setText("");
-                name.setText("");
-                itemImg.setText("");
-                //Grab the fragment manager and move us back a page/fragment
-                fm = getActivity().getSupportFragmentManager();
-                fm.popBackStack();
+            public void onClick(View view) {
+                Log.d("Button Pressed", "Pressed");
+                new LibsBuilder()
+                        .withLibraries("picasso")
+                        .withAutoDetect(true)
+                        .withLicenseShown(true)
+                        .withVersionShown(true)
+                        .withActivityTitle("Credits")
+                        .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                        .start(getActivity());
             }
         });
 
+        final CardView myLayout
+                = (CardView) view.findViewById(R.id.tweetView);
 
+        final long tweetId = 943570105375580161L;
+        TweetUtils.loadTweet(tweetId, new Callback<Tweet>() {
+            @Override
+            public void success(Result<Tweet> result) {
+                myLayout.addView(new CompactTweetView(getContext(), result.data,
+                        R.style.tw__TweetDarkWithActionsStyle));
+            }
 
-
+            @Override
+            public void failure(TwitterException exception) {
+                // Toast.makeText(...).show();
+            }
+        });
         return view;
     }
 

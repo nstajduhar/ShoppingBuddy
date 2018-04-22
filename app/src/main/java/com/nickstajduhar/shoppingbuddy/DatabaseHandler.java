@@ -177,15 +177,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
 
-    public int updateItems(Item item){
+    public int updateItems(Item item, String name){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, item.getName());
         values.put(COLUMN_PRICE, item.getPrice());
         values.put(COLUMN_ISLE, item.getItemImg());
         values.put(COLUMN_ITEMIMG, item.getItemImg());
-        return db.update(TABLE_ITEMS, values, COLUMN_NAME + "=" + item.getName(),
-                new String[]{String.valueOf(item.getName())});
+        return db.update(TABLE_ITEMS, values, COLUMN_NAME + "= ?",
+                new String[]{String.valueOf(name)});
     }
 
 
@@ -193,10 +193,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * DELETE OPERATIONS
      */
 
-    public void deleteItems(int bakery){
+    public void deleteItems(String name){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_ITEMS, COLUMN_ID + " = ?",
-                new String[]{String.valueOf(bakery)});
+        db.delete(TABLE_ITEMS, COLUMN_NAME + " = ?",
+                new String[]{String.valueOf(name)});
         db.close();
     }
 

@@ -1,10 +1,8 @@
 package com.nickstajduhar.shoppingbuddy;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -13,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -23,25 +20,27 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link UpdateItem.OnFragmentInteractionListener} interface
+ * {@link DeleteFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link UpdateItem#newInstance} factory method to
+ * Use the {@link DeleteFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UpdateItem extends Fragment {
-    FragmentManager fm;
-    static Spinner spin;
-
+public class DeleteFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private Item mParam1;
+    private String mParam1;
+    private String mParam2;
+
+    FragmentManager fm;
+    static Spinner spin;
 
     private OnFragmentInteractionListener mListener;
 
-    public UpdateItem() {
+    public DeleteFragment() {
         // Required empty public constructor
     }
 
@@ -50,13 +49,15 @@ public class UpdateItem extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @return A new instance of fragment UpdateItem.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment DeleteFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UpdateItem newInstance(Parcelable param1) {
-        UpdateItem fragment = new UpdateItem();
+    public static DeleteFragment newInstance(String param1, String param2) {
+        DeleteFragment fragment = new DeleteFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,87 +66,40 @@ public class UpdateItem extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getParcelable(ARG_PARAM1);
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_update_item, container, false);
+        View view = inflater.inflate(R.layout.fragment_delete, container, false);
+
+        spin = view.findViewById(R.id.spinner);
+
+        Button deleteButton = (Button) view.findViewById(R.id.deleteButton);
 
 
-         spin = view.findViewById(R.id.spinner);
-
-        //Grab all the locations from the database
         final DatabaseHandler db = new DatabaseHandler(getContext());
         ArrayList<Item> list = db.getAllItemsName();
-        Log.d("NICK", db.getAllItemsName().toString() + "");
         //Link the ArrayList with the spinner
         ArrayAdapter adapter = new ArrayAdapter(getContext(),
                 android.R.layout.simple_spinner_dropdown_item, list);
         spin.setAdapter(adapter);
 
-        Log.d("Nickspin", spin.getSelectedItem().toString() + "");
-
-        final EditText itemName = (EditText) view.findViewById(R.id.itemName);
-        final EditText itemPrice = (EditText) view.findViewById(R.id.itemPrice);
-        final EditText itemIsle = (EditText) view.findViewById(R.id.itemIsle);
-        final EditText itemImg = (EditText) view.findViewById(R.id.itemImg);
-        Button selectButton = (Button) view.findViewById(R.id.selectButton);
-        if(mParam1 != null){
-            itemName.setText(mParam1.getName());
-            //itemPrice.setText(mParam1.getPrice());
-            itemIsle.setText(mParam1.getIsle());
-            itemImg.setText(mParam1.getItemImg());
-        }
-
-        selectButton.setOnClickListener(new View.OnClickListener() {
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String isle = String.valueOf(db.getAllItems().get(spin.getSelectedItemPosition()).getIsle());
-                String price = String.valueOf(db.getAllItems().get(spin.getSelectedItemPosition()).getPrice());
-                itemName.setText(db.getAllItems().get(spin.getSelectedItemPosition()).getName());
-                itemIsle.setText(isle);
-                itemPrice.setText(price);
-                itemImg.setText(db.getAllItems().get(spin.getSelectedItemPosition()).getItemImg());
-
+                Toast.makeText(getContext(), spin.getSelectedItem().toString() + " has been deleted from the database",
+                        Toast.LENGTH_SHORT).show();
+                db.deleteItems(spin.getSelectedItem().toString());
             }
-
         });
-
-        Button update = (Button) view.findViewById(R.id.updateButton);
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mParam1 != null) {
-                    Log.d("Update Done", "Updated Item");
-                    Toast.makeText(getContext(), spin.getSelectedItem().toString() + " has been updated in the database",
-                            Toast.LENGTH_SHORT).show();
-                    mParam1.setName(itemName.getText().toString());
-                    mParam1.setIsle(Integer.parseInt(itemIsle.getText().toString()));
-                    mParam1.setPrice(Double.valueOf(itemPrice.getText().toString()));
-                    mParam1.setItemImg(itemImg.getText().toString());
-                    db.updateItems(mParam1, spin.getSelectedItem().toString());
-                    fm = getActivity().getSupportFragmentManager();
-                    fm.popBackStack();
-                }
-            }
-
-        });
-
-
 
         return view;
     }
-
-
-    public static void getSpinnerSelection(){
-        spin.getSelectedItem().toString();
-    }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

@@ -35,6 +35,8 @@ public class account extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    public static Boolean isLoggedIn = false;
+
     private OnFragmentInteractionListener mListener;
 
     public account() {
@@ -75,17 +77,42 @@ public class account extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_account, container, false);
 
         Button login = (Button) view.findViewById(R.id.submitButton);
+        Button forgotPassword = (Button) view.findViewById(R.id.forgotPassword);
 
         final EditText user = (EditText) view.findViewById(R.id.userBox);
         final EditText pass = (EditText) view.findViewById(R.id.passwordBox);
 
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String[] emailAddress = {"support@shoppingbuddy.ca"};
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL, emailAddress);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Forgot your password?");
+                intent.putExtra(Intent.EXTRA_TEXT, "I have forgotten my password for the following account: ");
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
+
+        if (isLoggedIn == true){
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            fm.beginTransaction().replace(R.id.content_main, new adminPage()).commit();
+
+        }
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (user.getText().toString().equals("admin") && pass.getText().toString().equals("password")) {
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    fm.beginTransaction().replace(R.id.content_main, new adminPage()).commit();
+                if (isLoggedIn != true) {
+                    if (user.getText().toString().equals("admin") && pass.getText().toString().equals("password")) {
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        isLoggedIn = true;
+                        fm.beginTransaction().replace(R.id.content_main, new adminPage()).commit();
 
+                    }
                 }
             }
         });

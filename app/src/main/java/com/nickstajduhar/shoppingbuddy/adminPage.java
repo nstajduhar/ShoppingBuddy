@@ -74,6 +74,8 @@ public class adminPage extends Fragment {
         Button deleteItems = (Button) view.findViewById(R.id.deleteItems);
         Button premadeItems = (Button) view.findViewById(R.id.insertItems);
 
+        Button logoutButton = (Button) view.findViewById(R.id.logoutButton);
+
 
        final DatabaseHandler db = new DatabaseHandler(getContext());
 
@@ -93,6 +95,21 @@ public class adminPage extends Fragment {
             public void onClick(View view) {
                 fm.beginTransaction().replace(R.id.content_main, new UpdateItem()).commit();
 
+            }
+        });
+
+        deleteItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fm.beginTransaction().replace(R.id.content_main, new DeleteFragment()).commit();
+            }
+        });
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                account.isLoggedIn = false;
+                fm.beginTransaction().replace(R.id.content_main, new account()).commit();
             }
         });
 
