@@ -238,8 +238,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, item.getName());
+        values.put(COLUMN_ISLE, item.getIsle());
         values.put(COLUMN_PRICE, item.getPrice());
-        values.put(COLUMN_ISLE, item.getItemImg());
         values.put(COLUMN_ITEMIMG, item.getItemImg());
         return db.update(TABLE_ITEMS, values, COLUMN_NAME + "= ?",
                 new String[]{String.valueOf(name)});

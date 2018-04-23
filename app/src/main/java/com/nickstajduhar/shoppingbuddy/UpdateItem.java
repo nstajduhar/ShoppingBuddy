@@ -124,11 +124,12 @@ public class UpdateItem extends Fragment {
                     Log.d("Update Done", "Updated Item");
                     Toast.makeText(getContext(), spin.getSelectedItem().toString() + " has been updated in the database",
                             Toast.LENGTH_SHORT).show();
-                    item.setName(itemName.getText().toString());
-                    item.setIsle(Integer.parseInt(itemIsle.getText().toString()));
-                    item.setPrice(Double.valueOf(itemPrice.getText().toString()));
-                    item.setItemImg(itemImg.getText().toString());
-                    db.updateItems(item, spin.getSelectedItem().toString());
+//                    item.setName(itemName.getText().toString());
+//                    item.setIsle(Integer.parseInt(itemIsle.getText().toString()));
+//                    item.setPrice(Double.valueOf(itemPrice.getText().toString()));
+//                    item.setItemImg(itemImg.getText().toString());
+                Item item = new Item(itemName.getText().toString(), Integer.parseInt(itemIsle.getText().toString()), Double.parseDouble(itemPrice.getText().toString()), itemImg.getText().toString());
+                db.updateItems(item, spin.getSelectedItem().toString());
                     fm = getActivity().getSupportFragmentManager();
                     fm.popBackStack();
 
