@@ -29,12 +29,27 @@
         android:textSize="@dimen/title_size" />
 
     <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentTop="false"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_centerHorizontal="false"
+        android:layout_centerInParent="false"
+        android:layout_centerVertical="false"
+        android:layout_toStartOf="@+id/item_price"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:text="$" />
+
+    <TextView
         android:id="@+id/item_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="14dp"
-        android:layout_toStartOf="@+id/imageView"
+        android:layout_toStartOf="@+id/favorite"
         android:fontFamily="@font/roboto_regular"
         android:paddingTop="10dp"
         android:text="@string/app_name"
@@ -63,12 +78,13 @@
         android:text="@string/app_name" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/favorite"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         app:srcCompat="@drawable/ic_favorite_black_24dp" />
+
 
     <FrameLayout
         android:layout_width="match_parent"

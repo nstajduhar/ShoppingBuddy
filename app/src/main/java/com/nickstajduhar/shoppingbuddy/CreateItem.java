@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 /**
@@ -90,14 +91,18 @@ public class CreateItem extends Fragment {
 
                 //Create the item object
                 Item item = new Item(name.getText().toString(), isleNumber, newprice, itemImg.getText().toString());
-                Log.d("NICK", isleNumber + " was returned");
-
+                Toast.makeText(getContext(), name.getText() + " has been added to the database",
+                        Toast.LENGTH_SHORT).show();
                 //Grab an instance of the database
                 DatabaseHandler db = new DatabaseHandler(getContext());
                 //Add the location to the database
                 db.addItem(item);
                 //Close the database
                 db.close();
+                price.setText("");
+                isle.setText("");
+                name.setText("");
+                itemImg.setText("");
                 //Grab the fragment manager and move us back a page/fragment
                 fm = getActivity().getSupportFragmentManager();
                 fm.popBackStack();

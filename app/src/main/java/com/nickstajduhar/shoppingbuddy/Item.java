@@ -32,16 +32,6 @@ public class Item implements Parcelable{
         this.itemImg = itemImg;
     }
 
-    public Item(int id, String name, int isle, double price, String itemImg){
-        this.id = id;
-        this.name = name;
-        this.isle = isle;
-        //this.nut = nut;
-        //this.side = side;
-        this.price = price;
-        //this.ppPound = ppPound;
-        this.itemImg = itemImg;
-    }
 
     public Item(){
 

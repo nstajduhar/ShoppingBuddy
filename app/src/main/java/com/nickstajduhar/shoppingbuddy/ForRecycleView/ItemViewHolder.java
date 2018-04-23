@@ -1,11 +1,16 @@
 package com.nickstajduhar.shoppingbuddy.ForRecycleView;
 
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.nickstajduhar.shoppingbuddy.DatabaseHandler;
+import com.nickstajduhar.shoppingbuddy.Item;
 import com.nickstajduhar.shoppingbuddy.R;
 
 import java.net.URI;
@@ -22,7 +27,8 @@ public class ItemViewHolder extends RecyclerView.ViewHolder{
     private TextView item_title;
     private TextView item_price;
     private TextView item_isle;
-    private TextView item_side;
+    private ImageView item_fav;
+    private ImageView item_delete;
 
     private RelativeLayout inventoryItem;
 
@@ -33,12 +39,15 @@ public class ItemViewHolder extends RecyclerView.ViewHolder{
         item_title = (TextView) itemView.findViewById(R.id.item_title);
         item_price = (TextView) itemView.findViewById(R.id.item_price);
         item_isle = (TextView) itemView.findViewById(R.id.item_isle);
+
+        item_fav = (ImageView) itemView.findViewById(R.id.favorite);
         //item_side = (TextView) itemView.findViewById(R.id.item_side);
 
 
         inventoryItem = (RelativeLayout) itemView.findViewById(R.id.inventoryItem);
 
     }
+
 
 
     public ImageView getItem_icon() {
@@ -64,8 +73,9 @@ public class ItemViewHolder extends RecyclerView.ViewHolder{
 
 
 
-    public TextView getItem_side() {
-        return item_side;
+    public ImageView getItem_fav() {
+
+        return item_fav;
     }
 
 

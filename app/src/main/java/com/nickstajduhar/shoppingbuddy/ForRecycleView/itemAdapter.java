@@ -1,30 +1,20 @@
 package com.nickstajduhar.shoppingbuddy.ForRecycleView;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.nickstajduhar.shoppingbuddy.Bakery;
-import com.nickstajduhar.shoppingbuddy.CreateItem;
 import com.nickstajduhar.shoppingbuddy.DatabaseHandler;
 import com.nickstajduhar.shoppingbuddy.Item;
-import com.nickstajduhar.shoppingbuddy.ItemView;
 import com.nickstajduhar.shoppingbuddy.MainActivity;
 import com.nickstajduhar.shoppingbuddy.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -69,18 +59,37 @@ public class itemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, final int position) {
+    public void onBindViewHolder(final ItemViewHolder holder, final int position) {
         // holder.getPackageIcon().setImageResource(list.get(position).getImagesId()[0]);
         //Picasso.with(activity.getBaseContext()).load(list.get(position).getItemImg()).resize(50,25).centerCrop().into(holder.getItem_icon());
-        DatabaseHandler db = new DatabaseHandler(null);
+        final DatabaseHandler db = new DatabaseHandler(null);
         holder.getItem_title().setText(list.get(position).getName());
         holder.getItem_isle().setText(String.valueOf(list.get(position).getIsle()));
-        holder.getItem_price().setText("$" + list.get(position).getPrice().toString());
+        holder.getItem_price().setText(list.get(position).getPrice().toString());
         //Image in inventory
         //holder.getItem_icon().
         //Picasso.get().load("http://i.imgur.com/DvpvklR.png").into(holder.getItem_icon());
-        Context context = holder.getItem_icon().getContext();
+        final Context context = holder.getItem_icon().getContext();
         Picasso.with(context).load(list.get(position).getItemImg()).into(holder.getItem_icon());
+
+
+        holder.getItem_fav().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Create the item object
+                Item item = new Item(holder.getItem_title().getText().toString(), Integer.parseInt(String.valueOf(holder.getItem_isle().getText())), Double.parseDouble(String.valueOf(holder.getItem_price().getText()))
+                        , list.get(position).getItemImg());
+                //Grab an instance of the database
+                DatabaseHandler db = new DatabaseHandler(context);
+                //Add the location to the database
+                db.addFavItem(item);
+                //Close the database
+                db.close();
+               Toast.makeText(context, holder.getItem_title().getText().toString() + " has been added to your list",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
 
          /*
