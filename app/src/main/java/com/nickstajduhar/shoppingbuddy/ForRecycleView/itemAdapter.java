@@ -3,9 +3,11 @@ package com.nickstajduhar.shoppingbuddy.ForRecycleView;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.nickstajduhar.shoppingbuddy.DatabaseHandler;
 import com.nickstajduhar.shoppingbuddy.Item;
@@ -70,6 +72,7 @@ public class itemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         final Context context = holder.getItem_icon().getContext();
         Picasso.with(context).load(list.get(position).getItemImg()).into(holder.getItem_icon());
 
+
         holder.getItem_fav().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,6 +85,8 @@ public class itemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
                 db.addFavItem(item);
                 //Close the database
                 db.close();
+               Toast.makeText(context, holder.getItem_title().getText().toString() + " has been added to your list",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 

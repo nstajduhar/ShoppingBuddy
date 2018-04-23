@@ -14,11 +14,21 @@
         android:layout_height="wrap_content"
         android:text="Add Shopping to your Calendar" />
 
-    <Button
-        android:id="@+id/website"
+    <Spinner
+        android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Website" />
+        android:layout_columnSpan="2"
+        android:layout_columnWeight="2" />
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_row="1"
+        android:text="Delete Item" />
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/itemList"
@@ -27,5 +37,7 @@
         android:paddingBottom="?attr/actionBarSize" >
 
     </android.support.v7.widget.RecyclerView>
+
+
 
 </LinearLayout>

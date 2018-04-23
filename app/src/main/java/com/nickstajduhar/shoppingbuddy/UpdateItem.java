@@ -39,6 +39,8 @@ public class UpdateItem extends Fragment {
     // TODO: Rename and change types of parameters
     private Item mParam1;
 
+    private Item item;
+
     private OnFragmentInteractionListener mListener;
 
     public UpdateItem() {
@@ -82,7 +84,6 @@ public class UpdateItem extends Fragment {
         //Grab all the locations from the database
         final DatabaseHandler db = new DatabaseHandler(getContext());
         ArrayList<Item> list = db.getAllItemsName();
-        Log.d("NICK", db.getAllItemsName().toString() + "");
         //Link the ArrayList with the spinner
         ArrayAdapter adapter = new ArrayAdapter(getContext(),
                 android.R.layout.simple_spinner_dropdown_item, list);
@@ -95,7 +96,7 @@ public class UpdateItem extends Fragment {
         final EditText itemIsle = (EditText) view.findViewById(R.id.itemIsle);
         final EditText itemImg = (EditText) view.findViewById(R.id.itemImg);
         Button selectButton = (Button) view.findViewById(R.id.selectButton);
-        if(mParam1 != null){
+        if(item != null){
             itemName.setText(mParam1.getName());
             //itemPrice.setText(mParam1.getPrice());
             itemIsle.setText(mParam1.getIsle());
@@ -105,12 +106,12 @@ public class UpdateItem extends Fragment {
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String isle = String.valueOf(db.getAllItems().get(spin.getSelectedItemPosition()).getIsle());
-                String price = String.valueOf(db.getAllItems().get(spin.getSelectedItemPosition()).getPrice());
-                itemName.setText(db.getAllItems().get(spin.getSelectedItemPosition()).getName());
-                itemIsle.setText(isle);
-                itemPrice.setText(price);
-                itemImg.setText(db.getAllItems().get(spin.getSelectedItemPosition()).getItemImg());
+                    String isle = String.valueOf(db.getAllItems().get(spin.getSelectedItemPosition()).getIsle());
+                    String price = String.valueOf(db.getAllItems().get(spin.getSelectedItemPosition()).getPrice());
+                    itemName.setText(db.getAllItems().get(spin.getSelectedItemPosition()).getName());
+                    itemIsle.setText(isle);
+                    itemPrice.setText(price);
+                    itemImg.setText(db.getAllItems().get(spin.getSelectedItemPosition()).getItemImg());
 
             }
 
@@ -120,18 +121,17 @@ public class UpdateItem extends Fragment {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mParam1 != null) {
                     Log.d("Update Done", "Updated Item");
                     Toast.makeText(getContext(), spin.getSelectedItem().toString() + " has been updated in the database",
                             Toast.LENGTH_SHORT).show();
-                    mParam1.setName(itemName.getText().toString());
-                    mParam1.setIsle(Integer.parseInt(itemIsle.getText().toString()));
-                    mParam1.setPrice(Double.valueOf(itemPrice.getText().toString()));
-                    mParam1.setItemImg(itemImg.getText().toString());
-                    db.updateItems(mParam1, spin.getSelectedItem().toString());
+                    item.setName(itemName.getText().toString());
+                    item.setIsle(Integer.parseInt(itemIsle.getText().toString()));
+                    item.setPrice(Double.valueOf(itemPrice.getText().toString()));
+                    item.setItemImg(itemImg.getText().toString());
+                    db.updateItems(item, spin.getSelectedItem().toString());
                     fm = getActivity().getSupportFragmentManager();
                     fm.popBackStack();
-                }
+
             }
 
         });

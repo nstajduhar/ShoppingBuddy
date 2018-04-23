@@ -12,7 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.nickstajduhar.shoppingbuddy.ForRecycleView.itemAdapter;
 
@@ -77,9 +80,30 @@ public class inventory extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_inventory, container, false);
 
-        final String url = "https://www.zehrs.ca";
+       final Spinner spin = view.findViewById(R.id.spinner);
+
+        Button deleteButton = (Button) view.findViewById(R.id.deleteButton);
+
+
+        final DatabaseHandler db = new DatabaseHandler(getContext());
+        ArrayList<Item> list1 = db.getAllIFavtemsName();
+        //Link the ArrayList with the spinner
+        ArrayAdapter adapter1 = new ArrayAdapter(getContext(),
+                android.R.layout.simple_spinner_dropdown_item, list1);
+        spin.setAdapter(adapter1);
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), spin.getSelectedItem().toString() + " has been deleted from the list",
+                        Toast.LENGTH_SHORT).show();
+                db.deleteFavItems(spin.getSelectedItem().toString());
+            }
+        });
+
+
+
         Button calendar = (Button) view.findViewById(R.id.calendar);
-        Button web = (Button) view.findViewById(R.id.website);
 
 
         calendar.setOnClickListener(new View.OnClickListener() {
@@ -109,22 +133,12 @@ public class inventory extends Fragment {
             }
         });
 
-        web.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Uri webpage = Uri.parse(url);
-                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                    startActivity(intent);
-                }
-            }
-        });
+
 
 
 
         RecyclerView list = view.findViewById(R.id.itemList);
 
-        DatabaseHandler db = new DatabaseHandler(getContext());
         ArrayList<Item> allItems = db.getAllFavItems();
         db.close();
         itemAdapter adapter = new itemAdapter(allItems);

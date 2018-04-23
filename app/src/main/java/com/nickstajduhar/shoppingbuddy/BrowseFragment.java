@@ -1,6 +1,7 @@
 package com.nickstajduhar.shoppingbuddy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.nickstajduhar.shoppingbuddy.ForRecycleView.itemAdapter;
 
@@ -73,7 +75,19 @@ public class BrowseFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_browse, container, false);
 
+        Button web = (Button) view.findViewById(R.id.website);
+        final String url = "https://www.zehrs.ca";
 
+        web.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri webpage = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
 
         RecyclerView list = view.findViewById(R.id.itemList);
 

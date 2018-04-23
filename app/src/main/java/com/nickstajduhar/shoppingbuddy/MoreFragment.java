@@ -200,7 +200,7 @@ public class MoreFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                 .include(SuperStoreWindsor1)
                 .include(SuperStoreLeamington)
                 .build();
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
     }
 
     private void addMarkersToMap() {

@@ -259,7 +259,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void deleteFavItems(String name){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_ITEMS, COLUMN_NAME + " = ?",
+        db.delete(TABLE_FAV_ITEMS, COLUMN_NAME + " = ?",
                 new String[]{String.valueOf(name)});
         db.close();
     }
