@@ -27,3 +27,5 @@ Account displays all of your account information. This is where the card screen 
 Card displays a digital card which can be used as a loyaly card for the store. This information is pulled from the account screen.
 
 [![Card.png](https://s10.postimg.cc/6ynqqt6rd/Card.png)](https://postimg.cc/image/ym0g4wrxx/)
+
+[In Class Deployment Assignments.zip](https://github.com/nstajduhar/ShoppingBuddy/files/1936722/In.Class.Deployment.Assignments.zip)
