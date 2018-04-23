@@ -3,20 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.nickstajduhar.shoppingbuddy.BrowseFragment">
+    tools:context="com.nickstajduhar.shoppingbuddy.SettingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
     <Button
-        android:id="@+id/website"
+        android:id="@+id/call"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Website" />
+        android:text="Call Support" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/itemList"
+    <Button
+        android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="?attr/actionBarSize" />
+        android:text="Text Support" />
 
 </LinearLayout>
